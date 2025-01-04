@@ -72,10 +72,10 @@ pip install -r requirements.txt
 
 ```dotenv
 COZE_API_BASE=https://api.coze.com  # 替换为实际的 API 基础 URL
-COZE_API_KEY=pat_kMAW937OOnErHiqOQnmYCpEs3KtlxdBSf69TCYDmcF5oGfoNPjOcriOwF20gzaJF
-BOT_ID=7455932191584567347
+COZE_API_KEY=pat_kMAW937OOnErHiqO*******************OwF20gzaJF
+BOT_ID=74********67347
 USER_ID=123
-CONVERSATION_ID=7455936015061221388
+CONVERSATION_ID=745593******21388
 STREAMING=False
 ```
 
