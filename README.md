@@ -215,69 +215,6 @@ requests>=2.25.1
 
 模板使用简单的CSS和JavaScript实现了双标签切换功能，并展示生成的布局图和家具对应关系。
 
-## 常见问题
-
-### 1. 环境变量未正确加载
-
-**症状**：应用启动时报错提示缺少环境变量。
-
-**解决方案**：
-
-- 确保 `.env` 文件位于项目根目录。
-- 检查 `.env` 文件中的变量名称是否正确，无拼写错误。
-- 确保在代码中正确调用了 `load_dotenv()`。
-
-### 2. API 认证错误
-
-**症状**：
-
-```
-ValueError: Error from Coze api response: 4100: The token you entered is incorrect. Please double-check and try again...
-```
-
-**解决方案**：
-
-1. **检查 API Key**：
-   - 确保 `COZE_API_KEY` 的值正确无误。
-   - 检查是否有拼写错误或多余的空格。
-
-2. **确认 API Base URL**：
-   - 确保 `COZE_API_BASE` 设置为正确的 API 端点。
-
-3. **验证其他配置**：
-   - 确保 `BOT_ID`、`USER_ID` 和 `CONVERSATION_ID` 填写正确，与 Coze 平台上的配置一致。
-
-4. **重新生成 API Key**：
-   - 如果不确定 API Key 是否有效，尝试在 Coze 的开发者门户重新生成一个新的 API Key。
-
-### 3. JSON 解析错误
-
-**症状**：
-
-```
-ValueError: Coze API 返回的内容不是有效的 JSON。
-```
-
-**解决方案**：
-
-- 确保你的提示语明确要求 Coze API 只返回 JSON 串，并且没有其他多余的内容。
-- 打印 `json_str` 以查看实际返回的内容，确保其为正确的 JSON 格式。
-- 确认 Coze API 的响应格式是否符合预期。
-
-### 4. 生成布局图失败
-
-**症状**：无法生成布局图，提示房间过小或无法摆放家具。
-
-**解决方案**：
-
-- 检查输入的房间尺寸是否合理。
-- 确认家具数量是否在房间大小允许的范围内。
-- 调整输入参数，减少家具数量或增加房间尺寸。
-
-## 贡献
-
-欢迎提交 Issue 和 Pull Request 来贡献代码、报告问题或提出建议！
-
 ## 许可证
 
 [MIT](LICENSE)
