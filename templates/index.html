@@ -1,0 +1,226 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>房间布局生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f0f8ff;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .form-container {
+            height:800px;
+            width: 220px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .image-container {
+            flex-grow: 1;
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 0 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .label-container {
+            width: 200px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .legend {
+            margin-top: 20px;
+        }
+        .legend ul {
+            list-style: none;
+            padding: 0;
+        }
+        .legend li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .color-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border: 1px solid #000;
+        }
+        input[type=number], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        h1, h2, h3 {
+            color: #333333;
+        }
+        /* Tab styles */
+        .tab {
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #ccc;
+        }
+        .tabcontent {
+            display: none;
+        }
+    </style>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tabbuttons = document.getElementsByClassName("tabbutton");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        window.onload = function() {
+            document.getElementById("defaultOpen").click();
+        }
+    </script>
+</head>
+<body>
+    <h1>房间布局生成器</h1>
+    <div class="container">
+        <div class="form-container">
+            <div class="tab">
+                <button class="tabbutton" onclick="openTab(event, 'NumericInput')" id="defaultOpen">指定数字</button>
+                <button class="tabbutton" onclick="openTab(event, 'AIChat')">AI对话</button>
+            </div>
+            <!-- 指定数字 Tab内容 -->
+            <div id="NumericInput" class="tabcontent">
+                <form method="POST">
+                    <input type="hidden" name="form_type" value="numeric">
+                    <label for="length">房间长度 (米): </label><br>
+                    <input type="number" step="0.1" name="length" id="length" required value="{{ request.form.get('length', '') }}"><br>
+                    
+                    <label for="width">房间宽度 (米): </label><br>
+                    <input type="number" step="0.1" name="width" id="width" required value="{{ request.form.get('width', '') }}"><br>
+                    
+                    <label for="door_position">门的位置 (米, 从房间左侧): </label><br>
+                    <input type="number" step="0.1" name="door_position" id="door_position" required value="{{ request.form.get('door_position', '') }}"><br>
+                    
+                    <label for="num_beds">床数量: </label><br>
+                    <input type="number" name="num_beds" id="num_beds" required value="{{ request.form.get('num_beds', '') }}"><br>
+                    
+                    <label for="num_wardrobes">衣柜数量: </label><br>
+                    <input type="number" name="num_wardrobes" id="num_wardrobes" required value="{{ request.form.get('num_wardrobes', '') }}"><br>
+                    
+                    <label for="num_table_chairs">桌椅数量: </label><br>
+                    <input type="number" name="num_table_chairs" id="num_table_chairs" required value="{{ request.form.get('num_table_chairs', '') }}"><br>
+                    
+                    <label for="num_bookshelves">书架数量: </label><br>
+                    <input type="number" name="num_bookshelves" id="num_bookshelves" required value="{{ request.form.get('num_bookshelves', '') }}"><br>
+                    
+                    <input type="submit" value="生成布局">
+                </form>
+            </div>
+            <!-- AI对话 Tab内容 -->
+            <div id="AIChat" class="tabcontent">
+                <form method="POST">
+                    <input type="hidden" name="form_type" value="ai_chat">
+                    <label for="description">房间描述:</label><br>
+                    <textarea name="description" id="description" rows="4" cols="30" required>{{ request.form.get('description', '') }}</textarea><br>
+                    <input type="submit" value="生成布局">
+                </form>
+            </div>
+            {% if error_message %}
+                <p class="error">{{ error_message }}</p>
+            {% endif %}
+        </div>
+        <div class="image-container">
+            {% if img_data %}
+                <h2>房间布局图</h2>
+                <img src="data:image/png;base64,{{ img_data }}" alt="房间布局图" style="max-width: 100%; height: auto;">
+            {% endif %}
+        </div>
+        <div class="label-container">
+            {% if img_data %}
+                <div class="legend">
+                    <h3>颜色与物品名称的对应关系</h3>
+                    <ul>
+                        <li>
+                            <span class="color-box" style="background-color: {{ FURNITURE_COLORS['床'] }};"></span>
+                            床 (2x2)
+                        </li>
+                        <li>
+                            <span class="color-box" style="background-color: {{ FURNITURE_COLORS['单人床'] }};"></span>
+                            单人床 (2x1)
+                        </li>
+                        <li>
+                            <span class="color-box" style="background-color: {{ FURNITURE_COLORS['衣柜'] }};"></span>
+                            衣柜 (1x1)
+                        </li>
+                        <li>
+                            <span class="color-box" style="background-color: {{ FURNITURE_COLORS['桌椅'] }};"></span>
+                            桌椅 (1x2)
+                        </li>
+                        <li>
+                            <span class="color-box" style="background-color: {{ FURNITURE_COLORS['书架'] }};"></span>
+                            书架 (1x1)
+                        </li>
+                        <li>
+                            <span class="color-box" style="background-color: {{ FURNITURE_COLORS['门'] }}; height: 6px;"></span>
+                            门
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+</body>
+</html>
