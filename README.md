@@ -5,6 +5,7 @@
 房间布局生成器是一个基于 Flask 的 Web 应用，旨在帮助用户根据输入的房间描述或直接指定数字参数，自动生成房间内家具的布局图。用户可以通过两种方式输入信息：
 
 1. **指定数字**：手动输入房间的长度、宽度、门的位置以及各类家具的数量。
+
 2. **AI对话**：输入自然语言描述，系统通过与 Coze API 交互，自动提取必要的参数并生成布局图。
 
 生成的布局图将直观地展示房间内家具的摆放情况，帮助用户更好地规划和优化空间利用。
@@ -23,7 +24,12 @@ my-coze-flask-app/
 ├── .env
 ├── .gitignore
 ├── requirements.txt
-└── app.py
+├── app.py
+├── config.py
+├── layout.py
+├── chat.py
+└── templates/
+    └── index.html
 ```
 
 - **`.env`**：存储敏感的配置信息（如 API 密钥）。
@@ -38,8 +44,8 @@ my-coze-flask-app/
 首先，克隆本项目到你的本地机器：
 
 ```bash
-git clone https://github.com/yourusername/my-coze-flask-app.git
-cd my-coze-flask-app
+git clone https://github.com/Rise0821/Room-Layout-Generator.git
+cd Room-Layout-Generator
 ```
 
 ### 2. 创建并激活虚拟环境（推荐）
@@ -120,6 +126,9 @@ python app.py
 ### 2. 访问应用
 
 打开你的浏览器，访问 `http://127.0.0.1:5000/`，你将看到房间布局生成器的界面。
+
+![001](screenshot/001.png)
+
 
 ### 3. 使用双标签输入
 
