@@ -266,6 +266,3 @@ ValueError: Coze API 返回的内容不是有效的 JSON。
 
 感谢 [Coze](https://www.coze.com) 提供的 API 支持，以及所有为 `langchain` 和 `matplotlib` 做出贡献的开发者们。
 
----
-
-如果你有任何问题或需要进一步的帮助，请随时联系我！
